@@ -74,3 +74,6 @@ Both models achieved high diagnostic accuracy across the 8 plant health categori
 | **ResNet50** | **99.46%** | **99.17%** | 0.0150 | 0.0312 | **~23.5M** |
 
 ---
+## 📁 Dataset & Pre-trained Weights
+- 🔗 **Dataset Access:** [Download Mango Leaf Dataset (Google Drive)](https://drive.google.com/drive/folders/1a849JBmJSsSiNPmYwbxp8xO77xIYeOtb?usp=sharing)
+- 🔗 **Model Weights:** [Download Trained Model Weights (.keras)](https://drive.google.com/drive/folders/1OZe88DZGv92iJWDqeTRVw21tvK3v-jk8?usp=sharing)
