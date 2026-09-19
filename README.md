@@ -1,4 +1,4 @@
-# Mango Leaf Disease Detection & Classification Pipeline
+# Mango Leaf Disease Detection & Classification
 
 An end-to-end deep learning framework designed for automated detection and 8-class categorization of mango leaf diseases. This project evaluates and compares two distinct architectural approaches: a **Custom Deep CNN** built from scratch and a fine-tuned **ResNet50 Transfer Learning** model. Built using TensorFlow/Keras and designed for real-time agricultural diagnostics.
 
