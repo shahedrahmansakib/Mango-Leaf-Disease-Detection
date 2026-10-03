@@ -3,103 +3,26 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 
-# Page Config
+# Page Configuration
 st.set_page_config(
-    page_title="Clasy AI | Pathology Dashboard",
+    page_title="AgriVision AI | Mango Disease Diagnostic",
     page_icon="🌿",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Advanced Glassmorphism CSS Inject (Matching Next.js Dashboard Template)
+# Light Green Theme Styling for Native Elements
 st.markdown("""
     <style>
-    /* Main Background Override */
-    .stApp {
-        background: #0d1117 !important;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-    
-    /* Hide Streamlit Native UI Elements */
-    header, footer, #MainMenu {visibility: hidden !important;}
-    
-    /* Sidebar Styling */
-    [data-testid="stSidebar"] {
-        background-color: #161b22 !important;
-        border-right: 1px solid #30363d !important;
-    }
-    
-    /* Top Navbar Glass Card */
-    .top-nav {
-        background: rgba(22, 27, 34, 0.8) !important;
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid #30363d;
-        border-radius: 12px;
-        padding: 16px 24px;
-        margin-bottom: 24px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    /* Stat Cards Glassmorphism */
-    .glass-card {
-        background: rgba(22, 27, 34, 0.7) !important;
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid #30363d;
-        border-radius: 12px;
-        padding: 20px;
-        transition: all 0.3s ease;
-    }
-    .glass-card:hover {
-        border-color: #10b981;
-        box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
-    }
-    
-    .stat-val {
-        font-size: 2rem;
-        font-weight: 800;
-        color: #f0f6fc;
-        margin: 4px 0;
-    }
-    .stat-title {
-        font-size: 0.85rem;
-        color: #8b949e;
-        font-weight: 500;
-    }
-    
-    /* Neon Green Badges */
-    .green-badge {
-        background: rgba(16, 185, 129, 0.15);
-        color: #10b981;
-        border: 1px solid rgba(16, 185, 129, 0.3);
-        padding: 3px 10px;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 600;
-    }
-    
-    /* Result Cards */
-    .res-green {
-        background: rgba(16, 185, 129, 0.1) !important;
-        border: 1px solid #10b981 !important;
-        border-radius: 10px;
-        padding: 16px;
-        margin-top: 15px;
-    }
-    .res-warn {
-        background: rgba(245, 158, 11, 0.1) !important;
-        border: 1px solid #f59e0b !important;
-        border-radius: 10px;
-        padding: 16px;
-        margin-top: 15px;
-    }
-    
-    /* Progress bar green accent */
+    /* Accent green highlights */
     .stProgress > div > div > div > div {
         background-color: #10b981 !important;
+    }
+    .stMetric {
+        background-color: #161b22;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #30363d;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -129,130 +52,65 @@ DISEASE_INFO = {
 
 # Sidebar
 with st.sidebar:
-    st.markdown("<h3 style='color:#10b981; margin-bottom:0;'>🌿 AgriVision AI</h3>", unsafe_allow_html=True)
-    st.caption("Glassmorphism Admin Suite")
-    st.markdown("---")
-    
-    st.markdown("#### ⚙️ Navigation")
-    st.markdown("• 📊 Dashboard Overview")
-    st.markdown("• 🔬 Diagnostic Engine")
-    st.markdown("• 📄 Model Architecture")
-    st.markdown("---")
-    
-    st.markdown("#### 🎯 Model Specs")
-    st.markdown("**Backbone:** Custom CNN")
-    st.markdown("**Params:** ~0.45M")
-    st.markdown("**Accuracy:** `99.67%`")
-    st.markdown("**Classes:** 8 Categories")
+    st.title("🌿 AgriVision AI")
+    st.caption("Mango Leaf Disease Diagnostic System")
+    st.divider()
+    st.markdown("### 📊 Model Architecture")
+    st.write("**Model:** Custom Deep CNN")
+    st.write("**Parameters:** ~0.45M")
+    st.write("**Validation Accuracy:** 99.67%")
+    st.divider()
+    st.markdown("### 🏷️ Detectable Classes")
+    for name in CLASS_NAMES:
+        st.write(f"- {name}")
 
-# Top Glass Navbar
-st.markdown("""
-    <div class="top-nav">
-        <div style="font-size:1.2rem; font-weight:700; color:#f0f6fc;">Dashboard Overview</div>
-        <div><span class="green-badge">● AI Engine Active</span></div>
-    </div>
-""", unsafe_allow_html=True)
+# Main Title Header
+st.title("🌿 Mango Pathology Diagnostic Dashboard")
+st.caption("Automated real-time leaf disease classification powered by Deep Learning")
 
-# 4 Stat Cards Row (Exact Layout)
-c1, c2, c3, c4 = st.columns(4)
+st.divider()
 
-with c1:
-    st.markdown("""
-        <div class="glass-card">
-            <div class="stat-title">Total Classes</div>
-            <div class="stat-val">8</div>
-            <span class="green-badge">Categorized</span>
-        </div>
-    """, unsafe_allow_html=True)
+# Metrics Row
+m1, m2, m3, m4 = st.columns(4)
+m1.metric(label="Total Classes", value="8")
+m2.metric(label="Validation Accuracy", value="99.67%")
+m3.metric(label="Model Size", value="1.75 MB")
+m4.metric(label="Inference Latency", value="< 0.2s")
 
-with c2:
-    st.markdown("""
-        <div class="stat-card">
-            <div class="stat-title">Model Accuracy</div>
-            <div class="stat-val">99.67%</div>
-            <span class="green-badge">Validation</span>
-        </div>
-    """, unsafe_allow_html=True)
+st.divider()
 
-with c3:
-    st.markdown("""
-        <div class="stat-card">
-            <div class="stat-title">Parameters</div>
-            <div class="stat-val">0.45M</div>
-            <span class="green-badge">Lightweight</span>
-        </div>
-    """, unsafe_allow_html=True)
+# Main Workspace
+col1, col2 = st.columns(2, gap="large")
 
-with c4:
-    st.markdown("""
-        <div class="stat-card">
-            <div class="stat-title">Inference Speed</div>
-            <div class="stat-val">&lt; 0.2s</div>
-            <span class="green-badge">Real-Time</span>
-        </div>
-    """, unsafe_allow_html=True)
-
-st.markdown("<br>", unsafe_allow_html=True)
-
-# Main Grid Area
-m1, m2 = st.columns([1, 1], gap="large")
-
-with m1:
-    st.markdown("""
-        <div class="glass-card">
-            <h4 style="margin:0 0 8px 0; color:#10b981;">📷 Specimen Ingestion</h4>
-            <p style="color:#8b949e; font-size:0.85rem; margin-bottom:12px;">
-                Upload a mango leaf photo to initiate diagnostic analysis.
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
-    
-    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
+with col1:
+    st.subheader("📷 Specimen Ingestion")
+    uploaded_file = st.file_uploader("Upload leaf photo (JPG, PNG)", type=["jpg", "jpeg", "png"])
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
-        st.image(image, caption="Uploaded Image", use_container_width=True)
+        st.image(image, caption="Uploaded Specimen", use_container_width=True)
 
-with m2:
-    st.markdown("""
-        <div class="glass-card">
-            <h4 style="margin:0 0 8px 0; color:#10b981;">🔬 Diagnostic Results</h4>
-            <p style="color:#8b949e; font-size:0.85rem; margin-bottom:12px;">
-                Real-time classification output and confidence score.
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
-    
+with col2:
+    st.subheader("🔬 Diagnostic Analysis")
     if uploaded_file is not None:
         img = image.resize((224, 224))
         img_array = np.array(img) / 255.0
         img_array = np.expand_dims(img_array, axis=0)
         
-        with st.spinner("Analyzing Specimen..."):
+        with st.spinner("Executing neural inference..."):
             predictions = model.predict(img_array)[0]
             predicted_class = CLASS_NAMES[np.argmax(predictions)]
             confidence = float(np.max(predictions) * 100)
             
         if predicted_class == 'Healthy':
-            st.markdown(f"""
-                <div class="res-green">
-                    <h3 style="margin:0; color:#10b981;">Diagnosis: {predicted_class}</h3>
-                    <p style="margin:4px 0 0 0; color:#f0f6fc;">Confidence: <b>{confidence:.2f}%</b></p>
-                </div>
-            """, unsafe_allow_html=True)
+            st.success(f"### 🎉 Diagnosis: {predicted_class}")
         else:
-            st.markdown(f"""
-                <div class="res-warn">
-                    <h3 style="margin:0; color:#f59e0b;">Detected: {predicted_class}</h3>
-                    <p style="margin:4px 0 0 0; color:#f0f6fc;">Confidence: <b>{confidence:.2f}%</b></p>
-                </div>
-            """, unsafe_allow_html=True)
+            st.warning(f"### ⚠️ Detected: {predicted_class}")
             
-        st.write("")
-        st.markdown("**Confidence Level:**")
+        st.markdown(f"**Confidence Level: {confidence:.2f}%**")
         st.progress(confidence / 100.0)
         
-        st.markdown("---")
-        st.markdown("##### 💡 Agronomic Recommendation:")
+        st.divider()
+        st.markdown("#### 💡 Agronomic Recommendation")
         st.info(DISEASE_INFO.get(predicted_class, "Standard maintenance recommended."))
     else:
-        st.info("👈 Upload a leaf image from the left panel to execute real-time inference.")
+        st.info("👈 Upload a leaf image from the left panel to run analysis.")
