@@ -2,5 +2,4 @@ streamlit
 tensorflow
 numpy
 Pillow
-matplotlib
-scikit-learn
+gdown
