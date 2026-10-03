@@ -10,7 +10,7 @@ st.write("Upload a mango leaf image to identify pathology conditions using Deep 
 @st.cache_resource
 def load_my_model():
     # Ensure this matches your trained model filename in the repository
-    return tf.keras.models.load_model("mango_model.h5")
+    return tf.keras.models.load_model("cnn_model.h5")
 
 model = load_my_model()
 
