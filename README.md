@@ -1,6 +1,20 @@
-# Mango Leaf Disease Detection & Classification
+# 🌿 Mango Leaf Disease Detection & Classification Pipeline
 
-An end-to-end deep learning framework designed for automated detection and 8-class categorization of mango leaf diseases. This project evaluates and compares two distinct architectural approaches: a **Custom Deep CNN** built from scratch and a fine-tuned **ResNet50 Transfer Learning** model. Built using TensorFlow/Keras and designed for real-time agricultural diagnostics.
+[![Live Web App](https://img.shields.io/badge/Streamlit-Live%20Demo-ff4b4b?style=for-the-badge&logo=streamlit)](https://mango-leaf-disease-detection-hdpspk3jzmnxpzupqmgcql.streamlit.app)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)](https://www.tensorflow.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
+
+An end-to-end deep learning framework designed for automated detection and 8-class categorization of mango leaf diseases. This project evaluates and compares two distinct architectural approaches: a **Custom Deep CNN** built from scratch and a fine-tuned **ResNet50 Transfer Learning** model. Built using TensorFlow/Keras and deployed as a real-time agricultural diagnostic web app.
+
+🔗 **Live Application URL:** [https://mango-leaf-disease-detection-hdpspk3jzmnxpzupqmgcql.streamlit.app](https://mango-leaf-disease-detection-hdpspk3jzmnxpzupqmgcql.streamlit.app)
+
+---
+
+## 🚀 Key Features & Deployment
+- **Real-Time Diagnostics:** Interactive Streamlit web interface for uploading leaf photos and instantly identifying pathology conditions.
+- **High Accuracy Inference:** Powered by a lightweight Custom Deep CNN model trained on 4,000 high-resolution images.
+- **Production Ready Pipeline:** Optimized input data ingestion using TensorFlow's `tf.data` API with `AUTOTUNE`, dynamic augmentation, and cached pipeline execution.
 
 ---
 
@@ -68,12 +82,16 @@ A pre-trained deep residual network leveraging transfer learning:
 
 Both models achieved high diagnostic accuracy across the 8 plant health categories:
 
-| Model Architecture | Training Accuracy | Validation Accuracy | Training Loss | Validation Loss | Total Params |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Custom CNN** | **99.25%** | **99.67%** | 0.0391 | 0.0208 | **~0.45M** |
-| **ResNet50** | **99.46%** | **99.17%** | 0.0150 | 0.0312 | **~23.5M** |
+| Model Architecture | Training Accuracy | Validation Accuracy | Training Loss | Validation Loss | Total Params | Model Size |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Custom CNN** | **99.25%** | **99.67%** | 0.0391 | 0.0208 | **~0.45M** | **~1.75 MB** |
+| **ResNet50** | **99.46%** | **99.17%** | 0.0150 | 0.0312 | **~23.5M** | **~89.98 MB** |
 
 ---
-## 📁 Dataset & Pre-trained Weights
-- 🔗 **Dataset Access:** [Download Mango Leaf Dataset (Google Drive)](https://drive.google.com/drive/folders/1a849JBmJSsSiNPmYwbxp8xO77xIYeOtb?usp=sharing)
-- 🔗 **Model Weights:** [Download Trained Model Weights (.keras)](https://drive.google.com/drive/folders/1OZe88DZGv92iJWDqeTRVw21tvK3v-jk8?usp=sharing)
+
+## 💻 How to Run Locally
+
+### 1. Clone Repository
+```bash
+git clone [https://github.com/shahedrahmansakib/Mango-Leaf-Disease-Detection.git](https://github.com/shahedrahmansakib/Mango-Leaf-Disease-Detection.git)
+cd Mango-Leaf-Disease-Detection
