@@ -1,4 +1,4 @@
-# 🌿 Mango Leaf Disease Detection & Classification Pipeline
+# 🌿 Mango Leaf Disease Detection & Classification using Deep Learning
 
 [![Live Web App](https://img.shields.io/badge/Streamlit-Live%20Demo-ff4b4b?style=for-the-badge&logo=streamlit)](https://mango-leaf-disease-detection-udhay7nzuptsajftzahxab.streamlit.app)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
