@@ -5,121 +5,111 @@ from PIL import Image
 
 # Page Configuration
 st.set_page_config(
-    page_title="AgriVision AI | Mango Pathology",
+    page_title="Clasy AI | Pathology Dashboard",
     page_icon="🌿",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom Glassmorphism CSS with Light Green Accent
+# Custom Glassmorphism CSS matching screenshot layout with Light Green Tone
 st.markdown("""
     <style>
-    /* Dark Theme Background */
+    /* Dark Background */
     .stApp {
-        background-color: #0b0f19;
-        color: #f1f5f9;
+        background-color: #0d1117;
+        color: #e6edf3;
     }
     
-    /* Top Glass Card Header */
-    .glass-header {
-        background: rgba(18, 24, 38, 0.7);
+    /* Hide Default Streamlit Header */
+    header {visibility: hidden;}
+
+    /* Top Glass Navbar */
+    .top-navbar {
+        background: rgba(22, 27, 34, 0.75);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        padding: 2rem;
-        margin-bottom: 1.5rem;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        text-align: center;
+        border-radius: 12px;
+        padding: 12px 24px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
     
-    .status-badge {
-        background: rgba(16, 185, 129, 0.15);
-        color: #34d399;
-        border: 1px solid rgba(52, 211, 153, 0.3);
-        padding: 6px 16px;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        display: inline-block;
-        margin-bottom: 12px;
-    }
-
-    .title-text {
-        color: #ffffff;
-        font-size: 2.2rem;
+    .nav-brand {
+        font-size: 1.3rem;
         font-weight: 800;
-        margin: 0;
-        letter-spacing: -0.5px;
-    }
-    
-    .subtitle-text {
-        color: #94a3b8;
-        font-size: 1rem;
-        margin-top: 8px;
+        color: #10b981;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
-    /* Glass Cards for Metrics & Containers */
-    .glass-card {
-        background: rgba(18, 24, 38, 0.65);
+    /* Glass Stat Cards */
+    .stat-card {
+        background: rgba(22, 27, 34, 0.65);
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 14px;
-        padding: 1.5rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        padding: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .stat-number {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin-top: 4px;
+    }
+    
+    .stat-label {
+        font-size: 0.85rem;
+        color: #8b949e;
+        font-weight: 500;
+    }
+    
+    .stat-badge-green {
+        background: rgba(16, 185, 129, 0.15);
+        color: #34d399;
+        font-size: 0.75rem;
+        padding: 2px 8px;
+        border-radius: 12px;
+        border: 1px solid rgba(52, 211, 153, 0.2);
     }
 
-    /* Light Green Highlight Accent for Result Box */
-    .result-box-green {
-        background: rgba(16, 185, 129, 0.1);
-        border-left: 5px solid #10b981;
-        border-radius: 10px;
-        padding: 1.2rem;
-        margin-top: 1rem;
+    /* Main Diagnostic Window Card */
+    .main-card {
+        background: rgba(22, 27, 34, 0.65);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 24px;
+        margin-top: 15px;
     }
 
-    .result-box-warning {
-        background: rgba(245, 158, 11, 0.1);
-        border-left: 5px solid #f59e0b;
-        border-radius: 10px;
-        padding: 1.2rem;
-        margin-top: 1rem;
+    .result-pill-green {
+        background: rgba(16, 185, 129, 0.12);
+        border-left: 4px solid #10b981;
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin-top: 15px;
     }
 
-    /* Customizing Streamlit Progress Bar Color to Light Green */
+    .result-pill-warning {
+        background: rgba(245, 158, 11, 0.12);
+        border-left: 4px solid #f59e0b;
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin-top: 15px;
+    }
+
+    /* Custom Streamlit Progress Bar Color */
     .stProgress > div > div > div > div {
-        background-color: #34d399;
+        background-color: #10b981;
     }
     </style>
 """, unsafe_allow_html=True)
-
-# Top Glass Header Banner
-st.markdown("""
-    <div class="glass-header">
-        <span class="status-badge">● Engine Online & Ready</span>
-        <div class="title-text">🌿 AgriVision AI Diagnostic Platform</div>
-        <div class="subtitle-text">Real-time Automated Mango Leaf Pathology Categorization using Deep Neural Networks</div>
-    </div>
-""", unsafe_allow_html=True)
-
-# Sidebar Setup
-with st.sidebar:
-    st.markdown("### ⚙️ System Metrics")
-    st.markdown("""
-    - **Architecture:** Custom Deep CNN
-    - **Total Params:** ~0.45M (1.75 MB)
-    - **Val Accuracy:** `99.67%`
-    - **Classes:** 8 Categories
-    """)
-    st.divider()
-    st.markdown("### 🏷️ Target Classes")
-    classes_list = [
-        "Anthracnose", "Bacterial Canker", "Cutting Weevil", "Die Back",
-        "Gall Midge", "Healthy", "Powdery Mildew", "Sooty Mould"
-    ]
-    for c in classes_list:
-        st.markdown(f"- **{c}**")
 
 # Cache Model
 @st.cache_resource
@@ -133,25 +123,101 @@ CLASS_NAMES = [
     'Gall Midge', 'Healthy', 'Powdery Mildew', 'Sooty Mould'
 ]
 
-DISEASE_ACTION = {
-    'Anthracnose': 'Apply copper-based fungicide. Avoid overhead irrigation.',
-    'Bacterial Canker': 'Prune affected foliage and apply bactericide spray.',
-    'Cutting Weevil': 'Inspect undersides of leaves and apply recommended insecticide.',
-    'Die Back': 'Trim infected twigs 2-3 inches below affected portion and seal with fungicide.',
-    'Gall Midge': 'Spray systemic insecticides during fresh foliage emergence.',
-    'Healthy': 'Plant specimen shows optimal health! Continue standard nutrition & hydration.',
-    'Powdery Mildew': 'Apply wettable sulfur or systemic fungicides at first sign.',
-    'Sooty Mould': 'Spray mild soapy water or neem oil to clear mold and eliminate honeydew insects.'
+DISEASE_INFO = {
+    'Anthracnose': 'Fungal infection causing dark sunken spots. Apply copper fungicides.',
+    'Bacterial Canker': 'Water-soaked bacterial lesions. Prune infected parts immediately.',
+    'Cutting Weevil': 'Pest cutting young leaf stalks. Apply targeted foliage spray.',
+    'Die Back': 'Fungal drying of branches from top down. Trim dried twigs.',
+    'Gall Midge': 'Insect galls formed on leaf surface. Use systemic insecticides.',
+    'Healthy': 'Optimal foliage condition! Maintain regular hydration & nutrition.',
+    'Powdery Mildew': 'White powdery fungal coating. Apply sulfur-based spray.',
+    'Sooty Mould': 'Black fungal layer. Clear honey-dew insects using neem spray.'
 }
 
-# Main Layout (2 Columns)
-col1, col2 = st.columns([1, 1], gap="large")
-
-with col1:
+# Left Navigation Sidebar
+with st.sidebar:
+    st.markdown("### 🌿 **AgriVision Admin**")
+    st.caption("AI-Powered Pathology Suite")
+    st.divider()
+    
+    st.markdown("#### ⚙️ Navigation")
+    st.markdown("- 📊 **Dashboard Overview**")
+    st.markdown("- 🔬 **Live Diagnostic Engine**")
+    st.markdown("- 📁 **Model Metrics & Specs**")
+    st.markdown("- 📄 **System Documentation**")
+    st.divider()
+    
+    st.markdown("#### 🎯 Model Information")
     st.markdown("""
-        <div class="glass-card">
-            <h4 style="margin:0 0 10px 0; color:#34d399;">📤 Image Upload</h4>
-            <p style="color:#94a3b8; font-size:0.9rem;">Drop a leaf specimen image to analyze</p>
+    * **Architecture:** Custom Deep CNN
+    * **Params:** ~0.45M (1.75 MB)
+    * **Val Accuracy:** `99.67%`
+    * **Supported Classes:** 8
+    """)
+    st.divider()
+    st.caption("v2.4 Glassmorphism Release")
+
+# Top Glass Navbar Header
+st.markdown("""
+    <div class="top-navbar">
+        <div class="nav-brand">🌿 Dashboard Overview</div>
+        <div style="color: #8b949e; font-size: 0.9rem;">
+            System Status: <span class="stat-badge-green">● AI Engine Active</span>
+        </div>
+    </div>
+""", unsafe_allow_html=True)
+
+# Top Stat Cards (4 Grid Cards like Screenshot)
+s1, s2, s3, s4 = st.columns(4)
+
+with s1:
+    st.markdown("""
+        <div class="stat-card">
+            <div class="stat-label">Total Classes</div>
+            <div class="stat-number">8</div>
+            <span class="stat-badge-green">Stratified Dataset</span>
+        </div>
+    """, unsafe_allow_html=True)
+
+with s2:
+    st.markdown("""
+        <div class="stat-card">
+            <div class="stat-label">Model Accuracy</div>
+            <div class="stat-number">99.67%</div>
+            <span class="stat-badge-green">Validation Score</span>
+        </div>
+    """, unsafe_allow_html=True)
+
+with s3:
+    st.markdown("""
+        <div class="stat-card">
+            <div class="stat-label">Model Parameters</div>
+            <div class="stat-number">0.45M</div>
+            <span class="stat-badge-green">Lightweight CNN</span>
+        </div>
+    """, unsafe_allow_html=True)
+
+with s4:
+    st.markdown("""
+        <div class="stat-card">
+            <div class="stat-label">Inference Speed</div>
+            <div class="stat-number">&lt; 0.2s</div>
+            <span class="stat-badge-green">Real-Time Processing</span>
+        </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# Main Dashboard Workspace (Dual Column Grid)
+m1, m2 = st.columns([1, 1], gap="large")
+
+with m1:
+    st.markdown("""
+        <div class="main-card">
+            <h4 style="margin:0 0 8px 0; color:#10b981;">📷 Image Ingestion Window</h4>
+            <p style="color:#8b949e; font-size:0.88rem; margin-bottom:15px;">
+                Upload a mango leaf photo to initiate deep learning pathology inference.
+            </p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -159,13 +225,15 @@ with col1:
     
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
-        st.image(image, caption="Uploaded Specimen", use_container_width=True)
+        st.image(image, caption="Target Specimen", use_container_width=True)
 
-with col2:
+with m2:
     st.markdown("""
-        <div class="glass-card">
-            <h4 style="margin:0 0 10px 0; color:#34d399;">🔬 Analysis & Inference</h4>
-            <p style="color:#94a3b8; font-size:0.9rem;">Model classification & action recommendations</p>
+        <div class="main-card">
+            <h4 style="margin:0 0 8px 0; color:#10b981;">🔬 Diagnostic Analytics</h4>
+            <p style="color:#8b949e; font-size:0.88rem; margin-bottom:15px;">
+                Real-time neural network classification and confidence assessment.
+            </p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -174,34 +242,32 @@ with col2:
         img_array = np.array(img) / 255.0
         img_array = np.expand_dims(img_array, axis=0)
         
-        with st.spinner("Executing neural network inference..."):
+        with st.spinner("Processing deep network inference..."):
             predictions = model.predict(img_array)[0]
             predicted_class = CLASS_NAMES[np.argmax(predictions)]
             confidence = float(np.max(predictions) * 100)
             
-        # Result Card Display
         if predicted_class == 'Healthy':
             st.markdown(f"""
-                <div class="result-box-green">
+                <div class="result-pill-green">
                     <h3 style="margin:0; color:#34d399;">Diagnosis: {predicted_class}</h3>
-                    <p style="margin:5px 0 0 0; color:#cbd5e1;">Confidence: <b>{confidence:.2f}%</b></p>
+                    <p style="margin:4px 0 0 0; color:#e6edf3;">Confidence Score: <b>{confidence:.2f}%</b></p>
                 </div>
             """, unsafe_allow_html=True)
         else:
             st.markdown(f"""
-                <div class="result-box-warning">
-                    <h3 style="margin:0; color:#fbbf24;">Detected: {predicted_class}</h3>
-                    <p style="margin:5px 0 0 0; color:#cbd5e1;">Confidence: <b>{confidence:.2f}%</b></p>
+                <div class="result-pill-warning">
+                    <h3 style="margin:0; color:#fbbf24;">Detected Pathology: {predicted_class}</h3>
+                    <p style="margin:4px 0 0 0; color:#e6edf3;">Confidence Score: <b>{confidence:.2f}%</b></p>
                 </div>
             """, unsafe_allow_html=True)
             
         st.write("")
-        st.markdown(f"**Confidence Meter:**")
+        st.markdown("**Confidence Probability:**")
         st.progress(confidence / 100.0)
         
-        # Actionable Recommendation Card
         st.markdown("---")
-        st.markdown("##### 💡 Agronomic Recommendation:")
-        st.info(DISEASE_ACTION.get(predicted_class, "Maintain standard plant care."))
+        st.markdown("##### 💡 Agronomic Treatment & Care Guideline:")
+        st.info(DISEASE_INFO.get(predicted_class, "Standard plant maintenance recommended."))
     else:
-        st.info("👈 Upload a leaf image on the left panel to display diagnostic analysis.")
+        st.info("👈 Upload a leaf image from the left ingestion panel to view real-time diagnostic analytics.")
