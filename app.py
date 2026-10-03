@@ -5,94 +5,121 @@ from PIL import Image
 
 # Page Configuration
 st.set_page_config(
-    page_title="Mango Leaf Disease Diagnostic System",
+    page_title="AgriVision AI | Mango Pathology",
     page_icon="🌿",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for Modern Styling
+# Custom Glassmorphism CSS with Light Green Accent
 st.markdown("""
     <style>
-    /* Main container styling */
-    .main {
-        background-color: #0f172a;
-        color: #f8fafc;
+    /* Dark Theme Background */
+    .stApp {
+        background-color: #0b0f19;
+        color: #f1f5f9;
     }
     
-    /* Header Card */
-    .header-card {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        border: 1px solid #334155;
-        padding: 2rem;
+    /* Top Glass Card Header */
+    .glass-header {
+        background: rgba(18, 24, 38, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 16px;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-        margin-bottom: 2rem;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         text-align: center;
     }
     
-    .header-title {
-        color: #38bdf8;
-        font-size: 2.3rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-    }
-    
-    .header-subtitle {
-        color: #94a3b8;
-        font-size: 1.05rem;
+    .status-badge {
+        background: rgba(16, 185, 129, 0.15);
+        color: #34d399;
+        border: 1px solid rgba(52, 211, 153, 0.3);
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 12px;
     }
 
-    /* Result Metric Boxes */
-    .metric-card {
-        background-color: #1e293b;
-        border-radius: 12px;
+    .title-text {
+        color: #ffffff;
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin: 0;
+        letter-spacing: -0.5px;
+    }
+    
+    .subtitle-text {
+        color: #94a3b8;
+        font-size: 1rem;
+        margin-top: 8px;
+    }
+
+    /* Glass Cards for Metrics & Containers */
+    .glass-card {
+        background: rgba(18, 24, 38, 0.65);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
         padding: 1.5rem;
-        border-left: 5px solid #38bdf8;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Light Green Highlight Accent for Result Box */
+    .result-box-green {
+        background: rgba(16, 185, 129, 0.1);
+        border-left: 5px solid #10b981;
+        border-radius: 10px;
+        padding: 1.2rem;
         margin-top: 1rem;
     }
 
-    /* Custom File Uploader Style */
-    .stFileUploader {
-        background-color: #1e293b;
-        border-radius: 12px;
-        padding: 1rem;
-        border: 2px dashed #475569;
+    .result-box-warning {
+        background: rgba(245, 158, 11, 0.1);
+        border-left: 5px solid #f59e0b;
+        border-radius: 10px;
+        padding: 1.2rem;
+        margin-top: 1rem;
+    }
+
+    /* Customizing Streamlit Progress Bar Color to Light Green */
+    .stProgress > div > div > div > div {
+        background-color: #34d399;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# App Header
+# Top Glass Header Banner
 st.markdown("""
-    <div class="header-card">
-        <div class="header-title">🌿 Mango Leaf Health Diagnostic Center</div>
-        <div class="header-subtitle">Automated Pathology Identification & Diagnostic Intelligence Platform using Deep Learning</div>
+    <div class="glass-header">
+        <span class="status-badge">● Engine Online & Ready</span>
+        <div class="title-text">🌿 AgriVision AI Diagnostic Platform</div>
+        <div class="subtitle-text">Real-time Automated Mango Leaf Pathology Categorization using Deep Neural Networks</div>
     </div>
 """, unsafe_allow_html=True)
 
 # Sidebar Setup
 with st.sidebar:
-    st.image("https://cdn-icons-png.flaticon.com/512/628/628324.png", width=80)
-    st.title("📌 System Overview")
-    st.info("""
-    **Model Architecture:** Custom Deep CNN (~0.45M Params)
-    \n**Accuracy:** 99.67% Validation Accuracy
-    \n**Supported Classes:** 8 Health Categories
-    """)
-    st.markdown("---")
-    st.markdown("### 🏷️ Detectable Diseases:")
+    st.markdown("### ⚙️ System Metrics")
     st.markdown("""
-    - Anthracnose
-    - Bacterial Canker
-    - Cutting Weevil
-    - Die Back
-    - Gall Midge
-    - Healthy
-    - Powdery Mildew
-    - Sooty Mould
+    - **Architecture:** Custom Deep CNN
+    - **Total Params:** ~0.45M (1.75 MB)
+    - **Val Accuracy:** `99.67%`
+    - **Classes:** 8 Categories
     """)
-    st.markdown("---")
-    st.caption("Developed for Academic & Portfolio Showcase")
+    st.divider()
+    st.markdown("### 🏷️ Target Classes")
+    classes_list = [
+        "Anthracnose", "Bacterial Canker", "Cutting Weevil", "Die Back",
+        "Gall Midge", "Healthy", "Powdery Mildew", "Sooty Mould"
+    ]
+    for c in classes_list:
+        st.markdown(f"- **{c}**")
 
 # Cache Model
 @st.cache_resource
@@ -106,55 +133,75 @@ CLASS_NAMES = [
     'Gall Midge', 'Healthy', 'Powdery Mildew', 'Sooty Mould'
 ]
 
-# Disease Information & Management Suggestions
-DISEASE_INFO = {
-    'Anthracnose': 'Fungal disease causing dark lesions. Apply copper-based fungicides.',
-    'Bacterial Canker': 'Bacterial infection causing water-soaked spots. Prune infected parts.',
-    'Cutting Weevil': 'Pest infestation causing leaf drops. Use recommended insecticides.',
-    'Die Back': 'Fungal drying of twigs from top downwards. Trim dried branches and apply fungicide.',
-    'Gall Midge': 'Insect infestation causing gall formation. Use systemic pest control.',
-    'Healthy': 'Leaf is healthy and free from noticeable diseases! Maintain regular care.',
-    'Powdery Mildew': 'White powdery fungal growth. Apply sulfur-based fungicides.',
-    'Sooty Mould': 'Black fungal layer caused by insect secretion. Control honeydew-producing insects.'
+DISEASE_ACTION = {
+    'Anthracnose': 'Apply copper-based fungicide. Avoid overhead irrigation.',
+    'Bacterial Canker': 'Prune affected foliage and apply bactericide spray.',
+    'Cutting Weevil': 'Inspect undersides of leaves and apply recommended insecticide.',
+    'Die Back': 'Trim infected twigs 2-3 inches below affected portion and seal with fungicide.',
+    'Gall Midge': 'Spray systemic insecticides during fresh foliage emergence.',
+    'Healthy': 'Plant specimen shows optimal health! Continue standard nutrition & hydration.',
+    'Powdery Mildew': 'Apply wettable sulfur or systemic fungicides at first sign.',
+    'Sooty Mould': 'Spray mild soapy water or neem oil to clear mold and eliminate honeydew insects.'
 }
 
-# Main Grid Layout (2 Columns)
+# Main Layout (2 Columns)
 col1, col2 = st.columns([1, 1], gap="large")
 
 with col1:
-    st.subheader("📤 Upload Leaf Image")
-    uploaded_file = st.file_uploader("Drop a high-resolution leaf photo here...", type=["jpg", "jpeg", "png"])
+    st.markdown("""
+        <div class="glass-card">
+            <h4 style="margin:0 0 10px 0; color:#34d399;">📤 Image Upload</h4>
+            <p style="color:#94a3b8; font-size:0.9rem;">Drop a leaf specimen image to analyze</p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
     
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
         st.image(image, caption="Uploaded Specimen", use_container_width=True)
 
 with col2:
-    st.subheader("🔬 Diagnostic Analysis")
+    st.markdown("""
+        <div class="glass-card">
+            <h4 style="margin:0 0 10px 0; color:#34d399;">🔬 Analysis & Inference</h4>
+            <p style="color:#94a3b8; font-size:0.9rem;">Model classification & action recommendations</p>
+        </div>
+    """, unsafe_allow_html=True)
     
     if uploaded_file is not None:
         img = image.resize((224, 224))
         img_array = np.array(img) / 255.0
         img_array = np.expand_dims(img_array, axis=0)
         
-        with st.spinner("Processing neural network inference..."):
+        with st.spinner("Executing neural network inference..."):
             predictions = model.predict(img_array)[0]
             predicted_class = CLASS_NAMES[np.argmax(predictions)]
             confidence = float(np.max(predictions) * 100)
             
-        # Success Badge or Healthy Indicator
+        # Result Card Display
         if predicted_class == 'Healthy':
-            st.success(f"### 🎉 Diagnosis: {predicted_class}")
+            st.markdown(f"""
+                <div class="result-box-green">
+                    <h3 style="margin:0; color:#34d399;">Diagnosis: {predicted_class}</h3>
+                    <p style="margin:5px 0 0 0; color:#cbd5e1;">Confidence: <b>{confidence:.2f}%</b></p>
+                </div>
+            """, unsafe_allow_html=True)
         else:
-            st.warning(f"### ⚠️ Detected Pathology: {predicted_class}")
+            st.markdown(f"""
+                <div class="result-box-warning">
+                    <h3 style="margin:0; color:#fbbf24;">Detected: {predicted_class}</h3>
+                    <p style="margin:5px 0 0 0; color:#cbd5e1;">Confidence: <b>{confidence:.2f}%</b></p>
+                </div>
+            """, unsafe_allow_html=True)
             
-        # Confidence Progress Bar
-        st.markdown(f"**Confidence Level: {confidence:.2f}%**")
+        st.write("")
+        st.markdown(f"**Confidence Meter:**")
         st.progress(confidence / 100.0)
         
-        # Recommendation Card
+        # Actionable Recommendation Card
         st.markdown("---")
-        st.markdown("### 💡 Recommended Action / Note:")
-        st.info(DISEASE_INFO.get(predicted_class, "No specific recommendations available."))
+        st.markdown("##### 💡 Agronomic Recommendation:")
+        st.info(DISEASE_ACTION.get(predicted_class, "Maintain standard plant care."))
     else:
-        st.info("👈 Please upload a leaf image from the panel on the left to perform real-time analysis.")
+        st.info("👈 Upload a leaf image on the left panel to display diagnostic analysis.")
