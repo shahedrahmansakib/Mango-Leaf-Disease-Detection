@@ -1,13 +1,13 @@
-# 🌿 Mango Leaf Disease Detection & Classification using Deep Learning
+# 🌿 Mango Leaf Disease Detection & Classification Pipeline
 
-[![Live Web App](https://img.shields.io/badge/Streamlit-Live%20Demo-ff4b4b?style=for-the-badge&logo=streamlit)](https://mango-leaf-disease-detection-hdpspk3jzmnxpzupqmgcql.streamlit.app)
+[![Live Web App](https://img.shields.io/badge/Streamlit-Live%20Demo-ff4b4b?style=for-the-badge&logo=streamlit)](https://mango-leaf-disease-detection-udhay7nzuptsajftzahxab.streamlit.app)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)](https://www.tensorflow.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
 An end-to-end deep learning framework designed for automated detection and 8-class categorization of mango leaf diseases. This project evaluates and compares two distinct architectural approaches: a **Custom Deep CNN** built from scratch and a fine-tuned **ResNet50 Transfer Learning** model. Built using TensorFlow/Keras and deployed as a real-time agricultural diagnostic web app.
 
-🔗 **Live Application URL:** [https://mango-leaf-disease-detection-hdpspk3jzmnxpzupqmgcql.streamlit.app](https://mango-leaf-disease-detection-hdpspk3jzmnxpzupqmgcql.streamlit.app)
+🔗 **Live Application URL:** [https://mango-leaf-disease-detection-udhay7nzuptsajftzahxab.streamlit.app](https://mango-leaf-disease-detection-udhay7nzuptsajftzahxab.streamlit.app)
 
 ---
 
@@ -64,7 +64,7 @@ A pre-trained deep residual network leveraging transfer learning:
 
 ---
 
-## ⚙️ Training Setup & Callbacks
+## ⚙️️ Training Setup & Callbacks
 
 | Parameter / Technique | Custom CNN | Fine-Tuned ResNet50 |
 | :--- | :--- | :--- |
